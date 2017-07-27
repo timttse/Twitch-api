@@ -1,0 +1,156 @@
+<html>
+	<head>
+
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+		<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<!-- 	<script src="scripts.js"></script>
+		<link rel="stylesheet" type="text/css" href="styles.css"> -->
+
+		<style>
+			/*body{background-color: #737373}*/
+			.wrapper{text-align: center;}
+			/*.center{position: absolute;top: 40%;left: 50%;transform: translate(-50%, -50%);text-align: center;vertical-align: center;}*/
+			.center{display:inline-block; min-width: 500px}
+			.scol{text-align: center;padding-top:0px;}
+			.logo{width:70px;height:70px;border-radius:35px;border:none; border-style: none;}
+			.hidden{display:none}
+			.status{font-style:italic;}
+			.streamContainer{margin:auto; text-align: center !important;}
+			.streamDiv{margin:5px 0 5px 0;padding: 15px 5px 15px 5px;border-radius:7px;}
+			.header{background-color: #6441A4;color:white;padding: 30px 15px 15px 20px;height:100px;border-radius:5px;}
+			.displayName{font-size:22px;}
+			.game{color:#6034b1;font-size:11px;font-style:italic;}
+			.offline{background-color: #a49fad;color:#fff;}
+			.online{background-color: #9fcb4e;color:#fff;}
+			.streamLink:link{text-decoration: none};
+			.streamLink:visited{text-decoration: none};
+			.streamLink:hover{text-decoration: none};
+			.streamLink:active{text-decoration: none};
+
+		</style>
+		<script>
+
+			// Sort channels so online channels at top
+			function rearrange(){
+				var container=$('.streamContainer')
+				var elem=container.find(".online").sort(sortChannels);
+				container.prepend(elem);
+				container.find(".header").prependTo(container);
+				// $('.streamContainer:first-child').prepend(elem);
+			}
+
+			function sortChannels(a,b){
+				console.log(a.className<b.className);
+				return a.className<b.className;
+			}
+
+			//Get user (streamer) informatin
+			function getUser(user){
+				$.getJSON("https://wind-bow.glitch.me/twitch-api/users/"+user+"?callback=?",function(data){
+					console.log("User: ");
+					console.log(data);
+					console.log("\n");
+
+				
+
+					if(data.status!=404){
+						var name=data.display_name;
+						var image=data.logo;
+						var url=data.url;
+
+						$("#link_"+user).attr("href",url);
+						$("#img_"+user).attr("src",image);
+						$("#name_"+user).text(name);
+					}
+				});
+
+
+			}
+
+			// Get channel information Status
+			function getChannel(channel){
+				$.getJSON("https://wind-bow.glitch.me/twitch-api/channels/"+channel+"?callback=?",function(data){
+					console.log("Channel: ")
+					console.log(data);
+					console.log("\n");
+
+					if(data.status!=404){
+						var name=data.display_name;
+						var status=data.status;
+						var image=data.logo;
+						var url=data.url;
+						var game=data.game;
+
+						$("#link_"+channel).attr("href",url);
+						$("#img_"+channel).attr("src",image);
+						$("#name_"+channel).html(name);
+						$("#status_"+channel).text(status);
+						$("#game_"+channel).text("Streaming "+game);
+
+					}
+				});
+			}
+
+			//Determine if channel offline or not
+			function getStream(stream){
+				$.getJSON("https://wind-bow.glitch.me/twitch-api/streams/"+stream+"?callback=?",function(data){
+					console.log("Stream: ")
+					console.log(data);
+					console.log("\n");
+					if(data.stream==null){
+						$("#status_"+stream).addClass("hidden");
+						$(".id_"+stream).addClass("offline").removeClass("online");
+						$("#status_"+stream).text(" Offline");
+						$("#game_"+stream).addClass("hidden");
+					} else {
+						// getChannel(stream);
+						$("#status_"+stream).removeClass("hidden");
+						$(".id_"+stream).addClass("online").removeClass("offline");
+						$("#game_"+stream).removeClass("hidden");
+					}
+					rearrange();
+				});
+			}
+
+			// initialize channels
+			function addChannelsToDiv(channels){
+				for(var i=0;i<channels.length;i++){
+					var c=channels[i];
+					$(".streamContainer").append("<a href='#' target='_blank' class='streamLink' id='link_"+c+"'><div class='streamDiv row id_"+c
+						+"''><span class='logoDiv col-md-2'><img src='' class='logo' id='img_"+c
+						+"'/></span><span class='scol display col-md-3' id='display_"+c
+						+"''><div class='displayName' id='name_"+c+"'></div><div class='game' id='game_"+c
+						+"'></div></span><span class='scol status hidden col-md-7' id='status_"+c
+						+"''></span></div></a>");
+				}
+
+			}
+
+			$(document).ready(function(){
+				var channels=["scarra","summit1g","freecodecamp","esl_sc2","ogamingsc2","riotgames","PlayOverwatch","dotamajor"];
+				// var channels=["esl_sc2","scarra"];
+
+				addChannelsToDiv(channels);
+				for(var i=0;i<channels.length;i++){
+					// getUser(channels[i]);
+					getChannel(channels[i]);
+					getStream(channels[i]);
+					// console.log(stream);
+				}
+				
+				return false;
+			});
+		</script>
+
+	</head>
+	<body id="body">
+		<div class=" wrapper text-center">
+			<div class="streamContainer container-fluid center"><div class="row header streamDiv text-md-left"><div class="col-md-6"><h2>Twitch Streamers</h2></div><div class="col-md-6"></div></div></div>
+		</div>
+	</body>
+</html>

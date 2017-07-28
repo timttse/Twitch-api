@@ -12,10 +12,10 @@
 		<link rel="stylesheet" type="text/css" href="styles.css"> -->
 
 		<style>
-			/*body{background-color: #737373}*/
+			body{background-color:#17141f}
 			.wrapper{text-align: center;}
 			/*.center{position: absolute;top: 40%;left: 50%;transform: translate(-50%, -50%);text-align: center;vertical-align: center;}*/
-			.center{display:inline-block; min-width: 500px}
+			.center{display:inline-block; min-width: 350px}
 			.scol{text-align: center;padding-top:0px;}
 			.logo{width:70px;height:70px;border-radius:35px;border:none; border-style: none;}
 			.hidden{display:none}
@@ -38,10 +38,9 @@
 			// Sort channels so online channels at top
 			function rearrange(){
 				var container=$('.streamContainer')
-				var elem=container.find(".online").sort(sortChannels);
+				var elem=container.find(".online").sort(sortChannels).parent();
 				container.prepend(elem);
 				container.find(".header").prependTo(container);
-				// $('.streamContainer:first-child').prepend(elem);
 			}
 
 			function sortChannels(a,b){
@@ -108,7 +107,6 @@
 						$("#status_"+stream).text(" Offline");
 						$("#game_"+stream).addClass("hidden");
 					} else {
-						// getChannel(stream);
 						$("#status_"+stream).removeClass("hidden");
 						$(".id_"+stream).addClass("online").removeClass("offline");
 						$("#game_"+stream).removeClass("hidden");
@@ -122,14 +120,28 @@
 				for(var i=0;i<channels.length;i++){
 					var c=channels[i];
 					$(".streamContainer").append("<a href='#' target='_blank' class='streamLink' id='link_"+c+"'><div class='streamDiv row id_"+c
-						+"''><span class='logoDiv col-md-2'><img src='' class='logo' id='img_"+c
-						+"'/></span><span class='scol display col-md-3' id='display_"+c
+						+"''><span class='logoDiv col-md-2 col-md-push-9'><img src='' class='logo' id='img_"+c
+						+"'/></span><span class='scol display col-md-3 col-md-pull-3' id='display_"+c
 						+"''><div class='displayName' id='name_"+c+"'></div><div class='game' id='game_"+c
 						+"'></div></span><span class='scol status hidden col-md-7' id='status_"+c
 						+"''></span></div></a>");
 				}
 
 			}
+
+			// 	// initialize channels
+			// function addChannelsToDiv(channels){
+			// 	for(var i=0;i<channels.length;i++){
+			// 		var c=channels[i];
+			// 		$(".streamContainer").append("<a href='#' target='_blank' class='streamLink' id='link_"+c+"'><div class='streamDiv row id_"+c
+			// 			+"''><div class='scol display col-sm-3' id='display_"+c
+			// 			+"''><div class='displayName' id='name_"+c+"'></div><div class='logoDiv col-sm-2  col-sm-pull-5'><img src='' class='logo' id='img_"+c
+			// 			+"'/></div><div class='game' id='game_"+c
+			// 			+"'></div></div><div class='scol status hidden col-md-7' id='status_"+c
+			// 			+"''></div></div></a>");
+			// 	}
+
+			// }
 
 			$(document).ready(function(){
 				var channels=["scarra","summit1g","freecodecamp","esl_sc2","ogamingsc2","riotgames","PlayOverwatch","dotamajor"];
@@ -150,7 +162,7 @@
 	</head>
 	<body id="body">
 		<div class=" wrapper text-center">
-			<div class="streamContainer container-fluid center"><div class="row header streamDiv text-md-left"><div class="col-md-6"><h2>Twitch Streamers</h2></div><div class="col-md-6"></div></div></div>
+			<div class="streamContainer container-fluid center"><div class="row header streamDiv text-md-left"><div class="col-md-12"><h2>Twitch Streamers</h2></div><div class="col-md-6"></div></div></div>
 		</div>
 	</body>
 </html>

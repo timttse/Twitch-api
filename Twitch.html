@@ -12,7 +12,7 @@
 		<link rel="stylesheet" type="text/css" href="styles.css"> -->
 
 		<style>
-			body{background-color:#17141f}
+			body{background-color:#17141f;width:100%;}
 			.wrapper{text-align: center;}
 			/*.center{position: absolute;top: 40%;left: 50%;transform: translate(-50%, -50%);text-align: center;vertical-align: center;}*/
 			.center{display:inline-block; min-width: 350px}
@@ -26,19 +26,26 @@
 			.header{background-color: #6441A4;color:white;min-height:100px;border-radius:5px;}
 			.headerTitle{padding: 35px 15px 15px 15px;color:#17141f;}
 			.menu{background-color: inherit;color:white;text-align: right;}
-			.menuBtn{width:100%; margin:2px;padding:6px 16px 6px 16px;cursor: pointer;background-color:#bcafd6;color:#815fc0; }
+		
+			/*.btn{border-color: #008000;}
+			.btn:active{border-color: #008000;}
+			.btn:focus{border-color: #008000;}*/
+			.menuBtn:focus{outline-style: none;}
+			.menuBtn{min-width:100px; margin:2px;padding:6px 16px 6px 16px;cursor: pointer;background-color:#bcafd6;color:#815fc0; }
 			.menuActive{background-color: #17141f};
-			.btn:focus,.btn:active{outline: none;}
+
+
 
 			.displayName{font-size:22px;}
 			.game{color:#6034b1;font-size:11px;font-style:italic;}
 			.offline{background-color: #a49fad;color:#17141f;}
 			.online{background-color: #9bbe5a;color:#17141f;}
 
-			#foot {height:92px;color: #fff; padding:20px 0px 0px 0px;background-color: #6441A4;}
-			.codepenLink{color:#bcafd6;font-size:18px;}
-			.codepenLink:hover{color:#bcafd6;}
-			.socialIcon{color:#bcafd6;}
+			/*.container-fluild{height:100%;}*/
+			#foot {height:92px;color: #fff; padding:20px 0px 0px 0px; width:100%;}
+			.codepenLink{color:#6441A4;font-size:18px;}
+			.codepenLink:hover{color:#6441A4;}
+			.socialIcon{color:#6441A4;}
 			
 			.streamLink:link, .streamLink:visited, .streamLink:hover, .streamLink:active {text-decoration: none};
 
@@ -168,17 +175,46 @@
 					moveMenu(resizeWidth);
 				});
 
+				// $(".allMenu").click(function(){filter(this);});
+				// $(".onlineMenu").click(function(){filter(this);});
+				// $(".offlineMenu").click(function(){filter(this);});
+				$(".menuBtn").click(function(){filter(this);});
+
 				return false;
 			});
 
+			function filter(elem){
+				// alert("in");
+				var action=$(elem).text();
+				console.log(action);
+				switch(action){
+					case ("All"):
+						// alert("All");
+						$(".online").removeClass("hidden");
+						$(".offline").removeClass("hidden");
+						break;
+					case ("Online"):
+						$(".online").removeClass("hidden");
+						$(".offline").addClass("hidden");
+						break;
+					case ("Offline"):
+						$(".offline").removeClass("hidden");
+						$(".online").addClass("hidden");
+						break;
+
+				}
+
+			}
+
 			function moveMenu(width){
-				
 				if (width <= 750) {
 					$("#topMenu").addClass("hidden");
 					$("#botMenu").removeClass("hidden");
+					$(".menuBtn").css("width","100%");
 				} else {
 					$("#topMenu").removeClass("hidden");
 					$("#botMenu").addClass("hidden");
+					$(".menuBtn").css("width","");
 				}
 			}
 		</script>
@@ -189,24 +225,26 @@
 			<div class="streamContainer container-fluid center">
 				<div class="header streamDiv">
 					<div class="row text-md-left">
-						<div class="headerTitle col-md-10">
+						<div class="headerTitle col-md-8">
 							<h2>Twitch Streamers</h2>
 						</div>
-						<div class="menu col-md-2 hidden" id="topMenu">
+						<div class="menu col-md-4 hidden" id="topMenu">
 							<div class="allMenu"><button class="btn menuBtn menuActive">All</button></div>
 							<div class="onlineMenu"><button class="btn menuBtn">Online</button></div>
 							<div class="offlineMenu"><button class="btn menuBtn">Offline</button></div>
 						</div>
 					</div>
 					<div class="row hidden" id="botMenu">
-						<div class="col-4 allMenu"><button class="btn menuBtn menuActive">All</button></div>
-						<div class="col-4 onlineMenu"><button class="btn menuBtn">Online</button></div>
-						<div class="col-4 offlineMenu"><button class="btn menuBtn">Offline</button></div>
+						<div class="allMenu col-4"><button class="btn menuBtn menuActive">All</button></div>
+						<div class="onlineMenu col-4"><button class="btn menuBtn">Online</button></div>
+						<div class="offlineMenu col-4"><button class="btn menuBtn">Offline</button></div>
 					</div>
 				</div>
 			</div>
 		</div>
-		<div class="container-fluid" id="foot">
+		
+	</body>
+	<div class="container-fluid" id="foot">
 			<div class="col-xs-12 text-center">
 				<div><a class="codepenLink" href="https://codepen.io/ttse/">Tim@ttse</a></div>
 			</div>
@@ -218,5 +256,4 @@
 				</ul>
 			</div>
 		</div>
-	</body>
 </html>

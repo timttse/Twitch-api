@@ -115,12 +115,23 @@
 				});
 			}
 
+			function restackDiv(width,channels,clen){
+				for(var i=0;i<clen;i++){
+					console.log(width);
+					if (width <= 750) {
+						$("#name_"+channels[i]).prependTo($("#logo_"+channels[i]));
+					} else {
+						$("#name_"+channels[i]).prependTo($("#display_"+channels[i]));					
+					}
+				}
+			}
+
 			// initialize channels
 			function addChannelsToDiv(channels){
 				for(var i=0;i<channels.length;i++){
 					var c=channels[i];
 					$(".streamContainer").append("<a href='#' target='_blank' class='streamLink' id='link_"+c+"'><div class='streamDiv row id_"+c
-						+"''><span class='logoDiv col-md-2 col-md-push-9'><img src='' class='logo' id='img_"+c
+						+"''><span class='logoDiv col-md-2 col-md-push-9' id='logo_"+c+"'><img src='' class='logo' id='img_"+c
 						+"'/></span><span class='scol display col-md-3 col-md-pull-3' id='display_"+c
 						+"''><div class='displayName' id='name_"+c+"'></div><div class='game' id='game_"+c
 						+"'></div></span><span class='scol status hidden col-md-7' id='status_"+c
@@ -129,32 +140,23 @@
 
 			}
 
-			// 	// initialize channels
-			// function addChannelsToDiv(channels){
-			// 	for(var i=0;i<channels.length;i++){
-			// 		var c=channels[i];
-			// 		$(".streamContainer").append("<a href='#' target='_blank' class='streamLink' id='link_"+c+"'><div class='streamDiv row id_"+c
-			// 			+"''><div class='scol display col-sm-3' id='display_"+c
-			// 			+"''><div class='displayName' id='name_"+c+"'></div><div class='logoDiv col-sm-2  col-sm-pull-5'><img src='' class='logo' id='img_"+c
-			// 			+"'/></div><div class='game' id='game_"+c
-			// 			+"'></div></div><div class='scol status hidden col-md-7' id='status_"+c
-			// 			+"''></div></div></a>");
-			// 	}
-
-			// }
-
 			$(document).ready(function(){
 				var channels=["scarra","summit1g","freecodecamp","esl_sc2","ogamingsc2","riotgames","PlayOverwatch","dotamajor"];
 				// var channels=["esl_sc2","scarra"];
 
 				addChannelsToDiv(channels);
 				for(var i=0;i<channels.length;i++){
-					// getUser(channels[i]);
 					getChannel(channels[i]);
 					getStream(channels[i]);
-					// console.log(stream);
 				}
-				
+
+				var onLoadWidth = $(window).width();
+				restackDiv(onLoadWidth);
+				$(window).resize(function () {
+					var resizeWidth = $(window).width();
+					restackDiv(resizeWidth,channels,channels.length);
+				});
+
 				return false;
 			});
 		</script>

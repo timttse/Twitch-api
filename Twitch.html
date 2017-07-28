@@ -22,21 +22,25 @@
 			.status{font-style:italic;}
 			.streamContainer{margin:auto; text-align: center !important;}
 			.streamDiv{margin:5px 0 5px 0;padding: 15px 5px 15px 5px;border-radius:7px;}
-			.header{background-color: #6441A4;color:white;padding: 30px 15px 15px 20px;height:100px;border-radius:5px;}
+
+			.header{background-color: #6441A4;color:white;min-height:100px;border-radius:5px;}
+			.headerTitle{padding: 35px 15px 15px 15px;}
+			.menu{background-color: inherit;color:white;padding: 0 20px 0 0;text-align: right;}
+			.menuBtn{width:80px; margin:2px;padding:6px 16px 6px 16px;cursor: pointer;background-color:#17141f;color:#fff; }
+			.menuActive{background-color: #bcafd6};
+			.btn:focus,.btn:actove{outline-color: #00ff00;}
+
 			.displayName{font-size:22px;}
 			.game{color:#6034b1;font-size:11px;font-style:italic;}
 			.offline{background-color: #a49fad;color:#fff;}
 			.online{background-color: #9fcb4e;color:#fff;}
 
-			#foot {height:92px;color: #fff; padding:10px 0px 0px 0px;background-color: #6441A4;}
-			.codepenLink{color:#bcafd6;}
+			#foot {height:92px;color: #fff; padding:20px 0px 0px 0px;background-color: #6441A4;}
+			.codepenLink{color:#bcafd6;font-size:18px;}
 			.codepenLink:hover{color:#bcafd6;}
 			.socialIcon{color:#bcafd6;}
 			
-			.streamLink:link{text-decoration: none};
-			.streamLink:visited{text-decoration: none};
-			.streamLink:hover{text-decoration: none};
-			.streamLink:active{text-decoration: none};
+			.streamLink:link, .streamLink:visited, .streamLink:hover, .streamLink:active {text-decoration: none};
 
 		</style>
 		<script>
@@ -123,7 +127,6 @@
 
 			function restackDiv(width,channels,clen){
 				for(var i=0;i<clen;i++){
-					console.log(width);
 					if (width <= 750) {
 						$("#name_"+channels[i]).prependTo($("#logo_"+channels[i]));
 					} else {
@@ -147,7 +150,7 @@
 			}
 
 			$(document).ready(function(){
-				var channels=["scarra","summit1g","freecodecamp","esl_sc2","ogamingsc2","riotgames","PlayOverwatch","dotamajor"];
+				var channels=["freecodecamp","riotgames","summit1g","esl_sc2","ogamingsc2","PlayOverwatch","dotamajor","voyboy","scarra"];
 				// var channels=["esl_sc2","scarra"];
 
 				addChannelsToDiv(channels);
@@ -158,23 +161,54 @@
 
 				var onLoadWidth = $(window).width();
 				restackDiv(onLoadWidth);
+				moveMenu(onLoadWidth);
 				$(window).resize(function () {
 					var resizeWidth = $(window).width();
 					restackDiv(resizeWidth,channels,channels.length);
+					moveMenu(resizeWidth);
 				});
 
 				return false;
 			});
+
+			function moveMenu(width){
+				
+				if (width <= 750) {
+					$("#topMenu").addClass("hidden");
+					$("#botMenu").removeClass("hidden");
+				} else {
+					$("#topMenu").removeClass("hidden");
+					$("#botMenu").addClass("hidden");
+				}
+			}
 		</script>
 
 	</head>
 	<body id="body">
 		<div class=" wrapper text-center">
-			<div class="streamContainer container-fluid center"><div class="row header streamDiv text-md-left"><div class="col-md-12"><h2>Twitch Streamers</h2></div><div class="col-md-6"></div></div></div>
+			<div class="streamContainer container-fluid center">
+				<div class="header streamDiv">
+					<div class="row text-md-left">
+						<div class="headerTitle col-md-6">
+							<h2>Twitch Streamers</h2>
+						</div>
+						<div class="menu col-md-6 hidden" id="topMenu">
+							<div class="allMenu"><button class="btn menuBtn menuActive">All</button></div>
+							<div class="onlineMenu"><button class="btn menuBtn">Online</button></div>
+							<div class="offlineMenu"><button class="btn menuBtn">Offline</button></div>
+						</div>
+					</div>
+					<div class="row hidden" id="botMenu">
+						<div class="col-4 allMenu"><button class="btn menuBtn menuActive">All</button></div>
+						<div class="col-4 onlineMenu"><button class="btn menuBtn">Online</button></div>
+						<div class="col-4 offlineMenu"><button class="btn menuBtn">Offline</button></div>
+					</div>
+				</div>
+			</div>
 		</div>
 		<div class="container-fluid" id="foot">
 			<div class="col-xs-12 text-center">
-				<h4>Created by <a class="codepenLink" href="https://codepen.io/ttse/">Tim@ttse</a></h4>
+				<div><a class="codepenLink" href="https://codepen.io/ttse/">Tim@ttse</a></div>
 			</div>
 			<div class="social-media-icons col-sm-12 text-center">
 				<ul class="list-inline col-sm-12">

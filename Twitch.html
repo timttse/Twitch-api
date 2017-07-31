@@ -24,7 +24,7 @@
 			.streamContainer{margin:auto; text-align: center !important;}
 			.streamDiv{margin:5px 0 5px 0;padding: 15px 5px 5px 5px;border-radius:7px;}
 
-			.header{background-color: #6441A4;color:white;min-height:100px;border-radius:5px;}
+			.header{background-color: #6441A4;min-height:100px;border-radius:5px;}
 			.headerTitle{padding: 15px 15px 15px 15px;color:#17141f;}
 			.menu{background-color: inherit;color:white;text-align: right;}
 
@@ -42,13 +42,16 @@
 			.codepenLink:hover{color:#6441A4;}
 			.socialIcon{color:#6441A4;}
 			
+			#botMenu{padding-right: 5px;}
 
 			input[type="text"]{background-color:#bcafd6 !important;color:#17141f !important;}
 			.searchField{text-align: left; padding: 5px 15px 0 15px; }
-			.searchBtn{background-color:#17141f;color:#815fc0;}
+			.searchBtn{background-color:#17141f;color:#815fc0;margin-right: 2px;}
 			.streamLink:link, .streamLink:visited, .streamLink:hover, .streamLink:active {text-decoration: none};
 			.menuBtn:focus{outline-style: none;}
-			.menuBtn{min-width:100px; margin:2px;padding:6px 16px 6px 16px;cursor: pointer;background-color:#bcafd6;color:#815fc0;}
+			.menuBtn{/*min-width:100px;*/ margin:2px;padding:6px 16px 6px 16px;cursor: pointer;background-color:#bcafd6;color:#815fc0;}
+			.topBtn{min-width:100px;}
+
 			.menuActive{background-color: #17141f};
 
 
@@ -74,6 +77,8 @@
 					// console.log("User: ");
 					// console.log(data);
 					// console.log("\n");
+
+				
 
 					if(data.status!=404){
 						var name=data.display_name;
@@ -248,9 +253,9 @@
 							<h1>Twitch Streamers</h1>
 						</div>
 						<div class="menu col-md-4 hidden" id="topMenu">
-							<div class="allMenu"><button class="btn menuBtn menuActive allBtn">All</button></div>
-							<div class="onlineMenu"><button class="btn menuBtn onlineBtn">Online</button></div>
-							<div class="offlineMenu"><button class="btn menuBtn offlineBtn">Offline</button></div>
+							<div class="allMenu"><button class="btn menuBtn menuActive allBtn topBtn">All</button></div>
+							<div class="onlineMenu"><button class="btn menuBtn onlineBtn topBtn">Online</button></div>
+							<div class="offlineMenu"><button class="btn menuBtn offlineBtn topBtn">Offline</button></div>
 						</div>
 					</div>
 					<div class="row" id="search">
@@ -268,9 +273,9 @@
 						</div>
 					</div>
 					<div class="row hidden" id="botMenu">
-						<div class="allMenu col-4"><button class="btn menuBtn menuActive allBtn">All</button></div>
-						<div class="onlineMenu col-4"><button class="btn menuBtn onlineBtn">Online</button></div>
-						<div class="offlineMenu col-4"><button class="btn menuBtn offlineBtn">Offline</button></div>
+						<div class="allMenu col-4"><button class="btn menuBtn menuActive allBtn botBtn">All</button></div>
+						<div class="onlineMenu col-4"><button class="btn menuBtn onlineBtn botBtn">Online</button></div>
+						<div class="offlineMenu col-4"><button class="btn menuBtn offlineBtn botBtn">Offline</button></div>
 					</div>
 				</div>
 			</div>

@@ -49,7 +49,7 @@
 			.searchBtn{background-color:#17141f;color:#815fc0;margin-right: 2px;}
 			.streamLink:link, .streamLink:visited, .streamLink:hover, .streamLink:active {text-decoration: none};
 			.menuBtn:focus{outline-style: none;}
-			.menuBtn{/*min-width:100px;*/ margin:2px;padding:6px 16px 6px 16px;cursor: pointer;background-color:#bcafd6;color:#815fc0;}
+			.menuBtn{margin:2px;padding:6px 16px 6px 16px;cursor: pointer;background-color:#bcafd6;color:#815fc0;}
 			.topBtn{min-width:100px;}
 
 			.menuActive{background-color: #17141f};
@@ -138,12 +138,14 @@
 				});
 			}
 
+			// If screen shrunk, stack streamer name above logo
 			function restackDiv(width,channels,clen){
 				for(var i=0;i<clen;i++){
 					if (width <= 750) {
 						$("#name_"+channels[i]).prependTo($("#logo_"+channels[i]));
-						$(".center").css("min-width","350px")
+						$(".center").css("min-width",width)
 					} else {
+						console.log(width);
 						$("#name_"+channels[i]).prependTo($("#display_"+channels[i]));
 						$(".center").css("min-width","750px")					
 					}
@@ -211,10 +213,13 @@
 				}
 
 				var onLoadWidth = $(window).width();
-				restackDiv(onLoadWidth);
+				var resizeWidth = $(window).width();
+
 				moveMenu(onLoadWidth);
+				restackDiv(resizeWidth,channels,channels.length);
+
 				$(window).resize(function () {
-					var resizeWidth = $(window).width();
+					resizeWidth = $(window).width();
 					restackDiv(resizeWidth,channels,channels.length);
 					moveMenu(resizeWidth);
 				});

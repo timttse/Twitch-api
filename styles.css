@@ -1,0 +1,40 @@
+body{background-color:#17141f;width:100%;}
+.wrapper{text-align: center;}
+.center{display:inline-block;}
+.scol{text-align: center;padding-top:0px;}
+.logo{width:70px;height:70px;border-radius:35px;border:none; border-style: none;}
+.hidden{display:none}
+.sHidden{display:none}
+.status{font-style:italic;}
+.streamContainer{margin:auto; text-align: center !important;}
+.streamDiv{margin:5px 0 5px 0;padding: 15px 5px 5px 5px;border-radius:7px;}
+
+.header{background-color: #6441A4;min-height:100px;border-radius:5px;}
+.headerTitle{padding: 15px 15px 15px 15px;color:#17141f;}
+.menu{background-color: inherit;color:white;text-align: right;}
+
+
+.displayName{font-size:22px;}
+.game{color:#6034b1;font-size:11px;font-style:italic;}
+
+
+.offline{background-color: #a49fad;color:#17141f;}
+.online{background-color: #9bbe5a;color:#17141f;}
+
+/*.container-fluild{height:100%;}*/
+#foot {height:92px;color: #fff; padding:20px 0px 0px 0px; width:100%;}
+.codepenLink{color:#6441A4;font-size:18px;}
+.codepenLink:hover{color:#6441A4;}
+.socialIcon{color:#6441A4;}
+
+#botMenu{padding-right: 5px;}
+
+input[type="text"]{background-color:#bcafd6 !important;color:#17141f !important;}
+.searchField{text-align: left; padding: 5px 15px 0 15px; }
+.searchBtn{background-color:#17141f;color:#815fc0;margin-right: 2px;}
+.streamLink:link, .streamLink:visited, .streamLink:hover, .streamLink:active {text-decoration: none};
+.menuBtn:focus{outline-style: none;}
+.menuBtn{margin:2px;padding:6px 16px 6px 16px;cursor: pointer;background-color:#bcafd6;color:#815fc0;}
+.topBtn{min-width:100px;}
+
+.menuActive{background-color: #17141f};

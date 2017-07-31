@@ -19,6 +19,7 @@
 			.scol{text-align: center;padding-top:0px;}
 			.logo{width:70px;height:70px;border-radius:35px;border:none; border-style: none;}
 			.hidden{display:none}
+			.sHidden{display:none}
 			.status{font-style:italic;}
 			.streamContainer{margin:auto; text-align: center !important;}
 			.streamDiv{margin:5px 0 5px 0;padding: 15px 5px 5px 5px;border-radius:7px;}
@@ -64,18 +65,15 @@
 			}
 
 			function sortChannels(a,b){
-				console.log(a.className<b.className);
 				return a.className<b.className;
 			}
 
 			//Get user (streamer) information
 			function getUser(user){
 				$.getJSON("https://wind-bow.glitch.me/twitch-api/users/"+user+"?callback=?",function(data){
-					console.log("User: ");
-					console.log(data);
-					console.log("\n");
-
-				
+					// console.log("User: ");
+					// console.log(data);
+					// console.log("\n");
 
 					if(data.status!=404){
 						var name=data.display_name;
@@ -94,9 +92,9 @@
 			// Get channel information Status
 			function getChannel(channel){
 				$.getJSON("https://wind-bow.glitch.me/twitch-api/channels/"+channel+"?callback=?",function(data){
-					console.log("Channel: ")
-					console.log(data);
-					console.log("\n");
+					// console.log("Channel: ")
+					// console.log(data);
+					// console.log("\n");
 
 					if(data.status!=404){
 						var name=data.display_name;
@@ -118,9 +116,9 @@
 			//Determine if channel offline or not
 			function getStream(stream){
 				$.getJSON("https://wind-bow.glitch.me/twitch-api/streams/"+stream+"?callback=?",function(data){
-					console.log("Stream: ")
+				/*	console.log("Stream: ")
 					console.log(data);
-					console.log("\n");
+					console.log("\n");*/
 					if(data.stream==null){
 						$("#status_"+stream).addClass("hidden");
 						$(".id_"+stream).addClass("offline").removeClass("online");
@@ -161,37 +159,11 @@
 
 			}
 
-			$(document).ready(function(){
-				var channels=["freecodecamp","riotgames","summit1g","esl_sc2","ogamingsc2","PlayOverwatch","dotamajor","voyboy","scarra"];
-				// var channels=["esl_sc2","scarra"];
-
-				addChannelsToDiv(channels);
-				for(var i=0;i<channels.length;i++){
-					getChannel(channels[i]);
-					getStream(channels[i]);
-				}
-
-				var onLoadWidth = $(window).width();
-				restackDiv(onLoadWidth);
-				moveMenu(onLoadWidth);
-				$(window).resize(function () {
-					var resizeWidth = $(window).width();
-					restackDiv(resizeWidth,channels,channels.length);
-					moveMenu(resizeWidth);
-				});
-				$(".menuBtn").click(function(){filter(this);});
-
-				return false;
-			});
-
 			function filter(elem){
-				// alert("in");
 				var action=$(elem).text();
-				console.log(action);
 				$(".menuBtn").removeClass("menuActive")
 				switch(action){
 					case ("All"):
-						// alert("All");
 						$(".online").removeClass("hidden");
 						$(".offline").removeClass("hidden");
 						$(".allBtn").addClass("menuActive");
@@ -222,6 +194,48 @@
 					$(".menuBtn").css("width","");
 				}
 			}
+
+			$(document).ready(function(){
+				var channels=["freecodecamp","riotgames","summit1g","esl_sc2","ogamingsc2","PlayOverwatch","dotamajor","voyboy","scarra"];
+				// var channels=["esl_sc2","scarra"];
+
+				addChannelsToDiv(channels);
+				for(var i=0;i<channels.length;i++){
+					getChannel(channels[i]);
+					getStream(channels[i]);
+				}
+
+				var onLoadWidth = $(window).width();
+				restackDiv(onLoadWidth);
+				moveMenu(onLoadWidth);
+				$(window).resize(function () {
+					var resizeWidth = $(window).width();
+					restackDiv(resizeWidth,channels,channels.length);
+					moveMenu(resizeWidth);
+				});
+				$(".menuBtn").click(function(){filter(this);});
+
+			
+				$(".searchForm").submit(function(e){
+					e.preventDefault();
+					var searchName=$("#streamerName").val()
+					$(".displayName").each(function(){
+						var dispName=$(this).text();
+						var reg=new RegExp(searchName,"ig");
+						if(reg.test(dispName)){
+							$(this).parent().parent().removeClass("sHidden");
+						}else{
+							$(this).parent().parent().addClass("sHidden");
+						}
+					});
+
+					
+				});
+
+				return false;
+			});
+
+
 		</script>
 
 	</head>
@@ -244,7 +258,7 @@
 							<form class="searchForm">
 								 <div class="form-group text-center">
 									<div class="input-group">
-										<input type="text" class="form-control formText" id="query" placeholder="Streamer name">
+										<input type="text" class="form-control formText" id="streamerName" placeholder="Streamer name">
 										<span class="input-group-btn">
 											<button class="btn searchBtn" type="submit"><i class="fa fa-search searchIcon"></i></button>
 										</span>
